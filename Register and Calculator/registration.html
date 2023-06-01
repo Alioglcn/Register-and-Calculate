@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Register Form</title>
+  <link href="css/style.css" rel="stylesheet" media="all">
+  <style>
+    body{
+      background-image: url('foto.jpg');
+    }
+  </style>
+  <script>
+    function validateForm() {
+      var name = document.getElementById('nameInput').value;
+      var surname = document.getElementById('surnameInput').value;
+      var date = document.getElementById('dateInput').value;
+      var password = document.getElementById('password').value;
+
+
+      if (!name || !surname) {
+        alert("Please fill the name and surname blanks");
+        return false;
+      }
+
+
+      if (!validateDate(date)) {
+        return false;
+      }
+
+
+      if (!validatePassword(password)) {
+        return false;
+      }
+
+
+      window.location.href = "calculator.html";
+    }
+
+    function validateDate(date) {
+      event.preventDefault();
+      var dateRegex = /^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[0-2])[\/](19|20)\d{2}$/;
+
+      if (!dateRegex.test(date)) {
+        alert("Invalid date format! Please enter a date in dd/mm/yyyy format");
+        return false;
+      }
+
+      var parts = date.split("/");
+      var day = parseInt(parts[0], 10);
+      var month = parseInt(parts[1], 10);
+      var year = parseInt(parts[2], 10);
+
+      if (day < 1 || day > 31) {
+        alert("Geçersiz gün değeri");
+        return false;
+      }
+
+      if (month < 1 || month > 12) {
+        alert("Invalid month value");
+        return false;
+      }
+
+      if (month === 2) {
+        var isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+        if ((isLeapYear && day > 29) || (!isLeapYear && day > 28)) {
+          alert("Invalid day value. Check for leap year for February!");
+          return false;
+        }
+      } else if ((month === 4 || month === 6 || month === 9 || month === 11) && day > 30) {
+        alert("Invalid day value!");
+        return false;
+      }
+
+      if (year < 1900 || year > 2099) {
+        alert("Invalid year value!");
+        return false;
+      }
+
+      return true;
+    }
+
+    function validatePassword(password) {
+
+      if (password.length < 6 || password.length > 15) {
+        alert("Invalid password! Password must be between 6 and 15 characters.");
+        return false;
+      }
+
+      if (!/[A-Z]/.test(password)) {
+        alert("Invalid password! The password must contain at least one capital letter.");
+        return false;
+      }
+
+
+      if (!/\d/.test(password)) {
+        alert("Invalid password! The password must contain at least one digit.");
+        return false;
+      }
+
+
+      if (!/[!@#$%^&*]/.test(password)) {
+        alert("Invalid password! Password must contain at least one special character (!@#$%^&*).");
+        return false;
+      }
+
+
+      alert("Current password.");
+      return true;
+    }
+  </script>
+</head>
+
+<body>
+<div style="background-image: url('foto.jpg');" class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+  <div class="wrapper wrapper--w680">
+    <div class="card card-4">
+      <div class="card-body">
+        <h2 class="title">Registration Form</h2>
+        <form id="form" action="calculator.html" method="GET">
+          <div class="row row-space">
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">Name</label>
+                <input class="input--style-4" pattern="[A-Za-z]+" type="text" name="name" required title="Just use letter please">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">Surname</label>
+                <input class="input--style-4" pattern="[A-Za-z]+" type="text" name="surname" required title="Just use letter please">
+              </div>
+            </div>
+          </div>
+          <div class="row row-space">
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">Date of Birth</label>
+                <div class="input-group-icon">
+                  <input class="input--style-4 js-datepicker" id="dateInput" placeholder="dd/mm/yyyy" type="text" name="dateInput" required title="Fill the birthday">
+                  <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">E-mail</label>
+                <div class="input-group-icon">
+                  <input class="input--style-4 js-datepicker" type="email" name="email" required title="Fill the email">
+                  <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row row-space ">
+            <div class="col-2">
+              <div class="input-group">
+                <label for="password" class="label">Password</label>
+                <input id="password" class="input--style-4" type="password" name="password" required title="Fill the password">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group">
+                <br>
+                <label class="label">Gender</label>
+                <div class="rs-select2 js-select-simple select--no-search">
+                  <select name="gender">
+                    <option selected="selected">Male</option>
+                    <option>Female</option>
+                  </select>
+                  <div class="select-dropdown"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="input-group">
+            <br>
+            <label class="label">Interests</label><br>
+            <input style="width: 50px" type="checkbox" id="swim" name="swim" value="swim">
+            <label for="swim"> Swim</label>
+            <input style="width: 50px" type="checkbox" id="code" name="code" value="code">
+            <label for="code"> Code</label>
+            <input style="width: 50px" type="checkbox" id="etc." name="etc." value="etc.">
+            <label for="etc."> etc.</label>
+          </div>
+          <div class="p-t-15">
+            <button class="btn btn--radius-2 btn--green" type="submit" onclick="validatePassword()">Submit</button>
+            <button class="btn btn--radius-2 btn--blue" type="reset">Reset</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
+
+
